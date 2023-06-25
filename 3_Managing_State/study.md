@@ -82,3 +82,14 @@ Option
 - 모든 채팅을 렌더링하되 다른 모든 채팅은 CSS로 숨긴다
 - 부모 컴포넌트에서 각 수신자에 대한 보류 중인 메시지를 state를 끌어올려서 보관할 수 있습니다. 이렇게 하면 자식 컴포넌트가 제거되더라도 중요한 정보를 보관하는 것은 부모 컴포넌트이므로 문제가 되지 않습니다. 이것이 가장 일반적인 해결책입니다.
 - React state 외에 다른 소스를 사용할 수도 있습니다. 예를 들어, 사용자가 실수로 페이지를 닫아도 메시지 초안이 유지되기를 원할 수 있습니다. 이를 구현하기 위해 Chat 컴포넌트가 localStorage에서 읽어서 state를 초기화하고 초안도 저장하도록 할 수 있습니다.
+
+# Extracting State Logic into a Reducer
+
+# Passing Data Deeply with Context
+
+### context 사용 사례
+
+- 테마
+- 현재 계정
+- 라우팅
+- state 관리
