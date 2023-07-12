@@ -1,76 +1,9 @@
-# Responding to Events
 
-이벤트 핸들러는 컴포넌트에 있을 수 있는 모든 하위 컴포넌트의 이벤트도 포착한다. 이벤트가 트리 위로 '버블' 또는 '전파'되는 것을 이벤트가 발생한 곳에서 시작해서 트리 위로 올라간다.
 
-:round_pushpin: Pitfall(함정)  
-첨부한 JSX 태그에서만 작동하는 onScroll을 제외한 모든 이벤트는 React에서 전파된다.
 
-### Stopping propagation
 
-```js
-function Button({ onClick, children }) {
-  return (
-    <button onClick={e => {
-      e.stopPropagation();
-      onClick();
-    }}>
-      {children}
-    </button>
-  );
-}
-```
 
-### Preventing default behavior
 
-```js
-export default function Signup() {
-  return (
-    <form onSubmit={e => {
-      e.preventDefault();
-      alert('Submitting!');
-    }}>
-      <input />
-      <button>Send</button>
-    </form>
-  );
-}
-```
-
-# State: A Component's Memory
-
-:round_pushpin: How does React know which state to return?
-
-"대신 간결한 구문을 구현하기 위해 훅은 동일한 컴포넌트의 모든 렌더링에서 안정적인 호출 순서에 의존합니다. 위의 규칙(“최상위 수준에서만 훅 호출”)을 따르면, 훅은 항상 같은 순서로 호출되기 때문에 실제로 잘 작동합니다. 또한 *린터 플러그인*은 대부분의 실수를 잡아줍니다."
-
-> eslint-plugin-react-hooks  
-> 1. exhaustive-deps 규칙: useEffect나 useCallback 등의 Hook에서 의존성 배열(dependency array)을 지정해야 함을 강제합니다. 의존성 배열을 올바르게 설정하지 않으면 버그나 성능 이슈의 원인이 될 수 있습니다.  
-> 2. rules-of-hooks 규칙: Hook을 올바르게 사용하는지 검사합니다. 예를 들어, 조건문이나 반복문 내에서 Hook을 호출하면 안 되며, 컴포넌트 함수 내에서만 Hook을 호출해야 합니다.  
-> 3. exhaustive-deps (additionalHooks): 이 규칙은 추가적인 Hook들에 대한 의존성 배열을 지정해야 함을 검사합니다. React에 내장되지 않은 사용자 정의 Hook들에 대해서도 의존성 배열을 설정하는 것이 좋습니다. 이를 통해 컴포넌트가 예상대로 동작하고 필요한 상태나 프로퍼티 변화에 반응할 수 있게 됩니다.  
-> 4. no-memo: 이 규칙은 불필요한 React.memo의 사용을 방지합니다. React.memo는 컴포넌트를 메모이제이션하여 재렌더링 성능을 최적화하는 데 사용됩니다. 그러나 메모이제이션은 항상 성능 향상을 보장하지는 않으며, 일부 상황에서는 오히려 성능을 저하시킬 수 있습니다. 이 규칙은 불필요한 React.memo의 사용을 방지하여 성능 최적화를 위해 적절하게 사용되도록 유도합니다.
-
-# Render and Commit
-
-1. 렌더링 촉발
-
-- 컴포넌트의 첫 렌더링인 경우
-- 컴포넌트의 state가 업데이트된 경우
-
-2. React가 컴포넌트를 렌더링한다.
-
-- 첫 렌더링에서 React는 루트 컴포넌트를 호출합니다.
-- 이후 렌더링에서 React는 state 업데이트에 의해 렌더링이 발동된 함수 컴포넌트를 호출한다.
-
-3. React가 DOM에 변경사항을 커밋
-
-# State as a Snapshot
-
-1. state를 설정하면 렌더링이 촉발된다.
-
-2. 렌더링은 그 시점의 스냅샷을 찍는다.
-
-3. 시간 경과에 따른 state
-
-state 변수의 값은 이벤트 핸들러의 코드가 비동기적이더라도 렌더링 내에서 절대 변경되지 않는다.
 
 # Queueing a Series of State Updates
 
